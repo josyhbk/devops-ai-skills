@@ -1,0 +1,4 @@
+facts*.json
+report*.md
+!aws-cost-audit/examples/*
+__pycache__/

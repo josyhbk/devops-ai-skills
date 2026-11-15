@@ -1,0 +1,946 @@
+{
+ "account": "111122223333",
+ "collected": "2026-11-13",
+ "period": {
+  "start": "2026-10-01",
+  "end": "2026-11-01"
+ },
+ "total_usd": 10200.61,
+ "spend_by_region": {
+  "us-east-1": 9972.39,
+  "us-west-2": 23.72,
+  "global": 204.5
+ },
+ "regions_scanned": [
+  "us-east-1",
+  "us-west-2"
+ ],
+ "required_tags": [
+  "environment",
+  "project",
+  "owner"
+ ],
+ "tags": {
+  "environment": {
+   "key": "Environment",
+   "untagged_usd": 7205.87,
+   "untagged_pct": 70.6,
+   "untagged_by_service": {
+    "Amazon Elastic Compute Cloud - Compute": 4502.4,
+    "EC2 - Other": 1233.32,
+    "AmazonCloudWatch": 1139.0,
+    "Amazon Simple Storage Service": 123.6,
+    "Amazon Elastic Load Balancing": 111.13,
+    "Amazon Virtual Private Cloud": 40.92,
+    "Amazon EC2 Container Registry (ECR)": 38.0,
+    "Amazon Route 53": 17.5
+   }
+  },
+  "project": {
+   "key": "Project",
+   "untagged_usd": 7205.87,
+   "untagged_pct": 70.6,
+   "untagged_by_service": {
+    "Amazon Elastic Compute Cloud - Compute": 4502.4,
+    "EC2 - Other": 1233.32,
+    "AmazonCloudWatch": 1139.0,
+    "Amazon Simple Storage Service": 123.6,
+    "Amazon Elastic Load Balancing": 111.13,
+    "Amazon Virtual Private Cloud": 40.92,
+    "Amazon EC2 Container Registry (ECR)": 38.0,
+    "Amazon Route 53": 17.5
+   }
+  },
+  "owner": {
+   "key": null,
+   "untagged_usd": null,
+   "untagged_pct": null,
+   "untagged_by_service": {}
+  }
+ },
+ "identified_usd": 553.36,
+ "identified_pct": 5.4,
+ "upper_bound_usd": 322.0,
+ "upper_bound_pct": 3.2,
+ "upcoming_usd": 372.0,
+ "by_check": [
+  {
+   "check": "eks-extended-support",
+   "findings": 1,
+   "monthly_usd": 372.0,
+   "kind": "saving"
+  },
+  {
+   "check": "log-no-retention",
+   "findings": 2,
+   "monthly_usd": 177.0,
+   "kind": "ceiling"
+  },
+  {
+   "check": "snapshot-old",
+   "findings": 1,
+   "monthly_usd": 145.0,
+   "kind": "ceiling"
+  },
+  {
+   "check": "ebs-unattached",
+   "findings": 4,
+   "monthly_usd": 85.0,
+   "kind": "saving"
+  },
+  {
+   "check": "ebs-gp2",
+   "findings": 1,
+   "monthly_usd": 48.0,
+   "kind": "saving"
+  },
+  {
+   "check": "lb-no-targets",
+   "findings": 2,
+   "monthly_usd": 33.48,
+   "kind": "saving"
+  },
+  {
+   "check": "eip-unassociated",
+   "findings": 4,
+   "monthly_usd": 14.88,
+   "kind": "saving"
+  },
+  {
+   "check": "nat-no-s3-endpoint",
+   "findings": 1,
+   "monthly_usd": null,
+   "kind": "not priced"
+  },
+  {
+   "check": "eks-extended-soon",
+   "findings": 1,
+   "monthly_usd": null,
+   "kind": "not priced"
+  },
+  {
+   "check": "tag-missing",
+   "findings": 7,
+   "monthly_usd": null,
+   "kind": "not priced"
+  },
+  {
+   "check": "tag-case-variants",
+   "findings": 2,
+   "monthly_usd": null,
+   "kind": "not priced"
+  },
+  {
+   "check": "tag-not-activated",
+   "findings": 1,
+   "monthly_usd": null,
+   "kind": "not priced"
+  }
+ ],
+ "findings": [
+  {
+   "check": "eks-extended-support",
+   "region": "us-east-1",
+   "resource": "staging",
+   "detail": "Kubernetes 1.32 left standard support on 2026-03-23",
+   "monthly_usd": 372.0,
+   "basis": "list price: $0.60 per hour instead of $0.10",
+   "evidence": "aws eks describe-cluster-versions"
+  },
+  {
+   "check": "log-no-retention",
+   "region": "us-east-1",
+   "resource": "48 log groups",
+   "detail": "never expire, 5900 GiB stored",
+   "monthly_usd": 177.0,
+   "basis": "upper bound: current storage at bill rate; the saving depends on the retention chosen",
+   "evidence": "aws logs describe-log-groups --query 'logGroups[?!retentionInDays]'",
+   "largest": [
+    {
+     "name": "/aws/containerinsights/prod/application",
+     "gib": 2900.0
+    },
+    {
+     "name": "/aws/eks/prod/cluster",
+     "gib": 1150.0
+    },
+    {
+     "name": "/aws/containerinsights/prod/dataplane",
+     "gib": 700.0
+    },
+    {
+     "name": "/aws/vpc/flowlogs/prod",
+     "gib": 640.0
+    },
+    {
+     "name": "/aws/rds/instance/app-db/postgresql",
+     "gib": 200.0
+    }
+   ],
+   "resources": [
+    "/aws/containerinsights/prod/application",
+    "/aws/eks/prod/cluster",
+    "/aws/containerinsights/prod/dataplane",
+    "/aws/vpc/flowlogs/prod",
+    "/aws/rds/instance/app-db/postgresql",
+    "/aws/lambda/prod-orders-api",
+    "/aws/lambda/prod-orders-worker",
+    "/aws/lambda/prod-orders-cron",
+    "/aws/lambda/prod-orders-dlq",
+    "/aws/lambda/prod-orders-stream",
+    "/aws/lambda/prod-orders-hook",
+    "/aws/lambda/prod-billing-api",
+    "/aws/lambda/prod-billing-worker",
+    "/aws/lambda/prod-billing-cron",
+    "/aws/lambda/prod-billing-dlq",
+    "/aws/lambda/prod-billing-stream",
+    "/aws/lambda/prod-billing-hook",
+    "/aws/lambda/prod-notify-api",
+    "/aws/lambda/prod-notify-worker",
+    "/aws/lambda/prod-notify-cron",
+    "/aws/lambda/prod-notify-dlq",
+    "/aws/lambda/prod-notify-stream",
+    "/aws/lambda/prod-notify-hook",
+    "/aws/lambda/prod-export-api",
+    "/aws/lambda/prod-export-worker",
+    "/aws/lambda/prod-export-cron",
+    "/aws/lambda/prod-export-dlq",
+    "/aws/lambda/prod-export-stream",
+    "/aws/lambda/prod-export-hook",
+    "/aws/lambda/prod-ingest-api",
+    "/aws/lambda/prod-ingest-worker",
+    "/aws/lambda/prod-ingest-cron",
+    "/aws/lambda/prod-ingest-dlq",
+    "/aws/lambda/prod-ingest-stream",
+    "/aws/lambda/prod-ingest-hook",
+    "/aws/lambda/prod-auth-api",
+    "/aws/lambda/prod-auth-worker",
+    "/aws/lambda/prod-auth-cron",
+    "/aws/lambda/prod-auth-dlq",
+    "/aws/lambda/prod-auth-stream",
+    "/aws/lambda/prod-auth-hook",
+    "/aws/lambda/prod-search-api",
+    "/aws/lambda/prod-search-worker",
+    "/aws/lambda/prod-search-cron",
+    "/aws/lambda/prod-search-dlq",
+    "/aws/lambda/prod-search-stream",
+    "/aws/lambda/prod-search-hook",
+    "/aws/lambda/poc-resize"
+   ]
+  },
+  {
+   "check": "snapshot-old",
+   "region": "us-east-1",
+   "resource": "60 snapshots",
+   "detail": "older than 90 days, 2900 GiB of source volumes, oldest from 2023-01-14; 12 more back an AMI and were left out",
+   "monthly_usd": 145.0,
+   "basis": "upper bound: full volume size at bill rate, snapshots are incremental",
+   "evidence": "aws ec2 describe-snapshots --owner-ids self",
+   "resources": [
+    "snap-00000000000000001",
+    "snap-00000000000000002",
+    "snap-00000000000000003",
+    "snap-00000000000000004",
+    "snap-00000000000000005",
+    "snap-00000000000000006",
+    "snap-00000000000000007",
+    "snap-00000000000000008",
+    "snap-00000000000000009",
+    "snap-0000000000000000a",
+    "snap-0000000000000000b",
+    "snap-0000000000000000c",
+    "snap-0000000000000000d",
+    "snap-0000000000000000e",
+    "snap-0000000000000000f",
+    "snap-00000000000000010",
+    "snap-00000000000000011",
+    "snap-00000000000000012",
+    "snap-00000000000000013",
+    "snap-00000000000000014",
+    "snap-00000000000000015",
+    "snap-00000000000000016",
+    "snap-00000000000000017",
+    "snap-00000000000000018",
+    "snap-00000000000000019",
+    "snap-0000000000000001a",
+    "snap-0000000000000001b",
+    "snap-0000000000000001c",
+    "snap-0000000000000001d",
+    "snap-0000000000000001e",
+    "snap-0000000000000001f",
+    "snap-00000000000000020",
+    "snap-00000000000000021",
+    "snap-00000000000000022",
+    "snap-00000000000000023",
+    "snap-00000000000000024",
+    "snap-00000000000000025",
+    "snap-00000000000000026",
+    "snap-00000000000000027",
+    "snap-00000000000000028",
+    "snap-00000000000000029",
+    "snap-0000000000000002a",
+    "snap-0000000000000002b",
+    "snap-0000000000000002c",
+    "snap-0000000000000002d",
+    "snap-0000000000000002e",
+    "snap-0000000000000002f",
+    "snap-00000000000000030",
+    "snap-00000000000000031",
+    "snap-00000000000000032"
+   ]
+  },
+  {
+   "check": "ebs-gp2",
+   "region": "us-east-1",
+   "resource": "14 volumes",
+   "detail": "2400 GiB on gp2; 0 over 1000 GiB need extra gp3 IOPS to match",
+   "monthly_usd": 48.0,
+   "basis": "bill rate, gp3 costs 20% less per GiB",
+   "evidence": "aws ec2 describe-volumes --filters Name=volume-type,Values=gp2",
+   "volumes_by_creator": {
+    "EBS CSI driver": 14
+   },
+   "resources": [
+    "vol-00000000000000017",
+    "vol-00000000000000018",
+    "vol-00000000000000019",
+    "vol-0000000000000001a",
+    "vol-0000000000000001b",
+    "vol-0000000000000001c",
+    "vol-0000000000000001d",
+    "vol-0000000000000001e",
+    "vol-0000000000000001f",
+    "vol-00000000000000020",
+    "vol-00000000000000021",
+    "vol-00000000000000022",
+    "vol-00000000000000023",
+    "vol-00000000000000024"
+   ]
+  },
+  {
+   "check": "ebs-unattached",
+   "region": "us-east-1",
+   "resource": "vol-00000000000000028",
+   "detail": "500 GiB gp3, created 2025-03-11",
+   "monthly_usd": 40.0,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-volumes --filters Name=status,Values=available",
+   "created_by": "no controller (Terraform, console or CLI)"
+  },
+  {
+   "check": "ebs-unattached",
+   "region": "us-west-2",
+   "resource": "vol-00000000000000384",
+   "detail": "200 GiB gp2, created 2024-11-05",
+   "monthly_usd": 20.0,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-volumes --filters Name=status,Values=available",
+   "created_by": "no controller (Terraform, console or CLI)"
+  },
+  {
+   "check": "lb-no-targets",
+   "region": "us-east-1",
+   "resource": "k8s-staging-grafana-3f9a1c2d4e",
+   "detail": "network load balancer with no registered targets",
+   "monthly_usd": 16.74,
+   "basis": "bill rate",
+   "evidence": "aws elbv2 describe-target-health --target-group-arn ARN (each target group)",
+   "created_by": "AWS Load Balancer Controller"
+  },
+  {
+   "check": "lb-no-targets",
+   "region": "us-east-1",
+   "resource": "legacy-api",
+   "detail": "application load balancer with no registered targets",
+   "monthly_usd": 16.74,
+   "basis": "bill rate",
+   "evidence": "aws elbv2 describe-target-health --target-group-arn ARN (each target group)",
+   "created_by": "no controller (Terraform, console or CLI)"
+  },
+  {
+   "check": "ebs-unattached",
+   "region": "us-east-1",
+   "resource": "vol-00000000000000027",
+   "detail": "150 GiB gp2, created 2025-08-19",
+   "monthly_usd": 15.0,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-volumes --filters Name=status,Values=available",
+   "created_by": "EBS CSI driver"
+  },
+  {
+   "check": "ebs-unattached",
+   "region": "us-east-1",
+   "resource": "vol-00000000000000026",
+   "detail": "100 GiB gp2, created 2025-06-02",
+   "monthly_usd": 10.0,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-volumes --filters Name=status,Values=available",
+   "created_by": "EBS CSI driver"
+  },
+  {
+   "check": "eip-unassociated",
+   "region": "us-east-1",
+   "resource": "eipalloc-00000000000000001",
+   "detail": "Elastic IP not associated with anything",
+   "monthly_usd": 3.72,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-addresses --query 'Addresses[?!AssociationId]'"
+  },
+  {
+   "check": "eip-unassociated",
+   "region": "us-east-1",
+   "resource": "eipalloc-00000000000000002",
+   "detail": "Elastic IP not associated with anything",
+   "monthly_usd": 3.72,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-addresses --query 'Addresses[?!AssociationId]'"
+  },
+  {
+   "check": "eip-unassociated",
+   "region": "us-east-1",
+   "resource": "eipalloc-00000000000000003",
+   "detail": "Elastic IP not associated with anything",
+   "monthly_usd": 3.72,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-addresses --query 'Addresses[?!AssociationId]'"
+  },
+  {
+   "check": "eip-unassociated",
+   "region": "us-west-2",
+   "resource": "eipalloc-00000000000000384",
+   "detail": "Elastic IP not associated with anything",
+   "monthly_usd": 3.72,
+   "basis": "bill rate",
+   "evidence": "aws ec2 describe-addresses --query 'Addresses[?!AssociationId]'"
+  },
+  {
+   "check": "log-no-retention",
+   "region": "us-west-2",
+   "resource": "2 log groups",
+   "detail": "never expire, 0.0 GiB stored",
+   "monthly_usd": 0.0,
+   "basis": "upper bound: current storage at bill rate; the saving depends on the retention chosen",
+   "evidence": "aws logs describe-log-groups --query 'logGroups[?!retentionInDays]'",
+   "largest": [
+    {
+     "name": "/aws/lambda/poc-thumbnailer",
+     "gib": 0.0
+    },
+    {
+     "name": "/aws/lambda/poc-webhook",
+     "gib": 0.0
+    }
+   ],
+   "resources": [
+    "/aws/lambda/poc-thumbnailer",
+    "/aws/lambda/poc-webhook"
+   ]
+  },
+  {
+   "check": "nat-no-s3-endpoint",
+   "region": "us-east-1",
+   "resource": "vpc-0a1b2c3d4e5f60001",
+   "detail": "3 NAT gateways and no S3 gateway endpoint, so S3 and ECR image layer traffic pays NAT data processing; account-wide NAT processing last month was $414.00 for 9,200 GB",
+   "monthly_usd": null,
+   "basis": "not estimated: the S3 share of NAT traffic needs VPC flow logs",
+   "evidence": "aws ec2 describe-vpc-endpoints --filters Name=vpc-id,Values=vpc-0a1b2c3d4e5f60001"
+  },
+  {
+   "check": "eks-extended-soon",
+   "region": "us-east-1",
+   "resource": "prod",
+   "detail": "Kubernetes 1.34 leaves standard support on 2026-12-01; extended support adds $372 a month",
+   "monthly_usd": null,
+   "basis": "starts on that date unless the cluster is upgraded",
+   "evidence": "aws eks describe-cluster-versions",
+   "starts": "2026-12-01",
+   "then_usd": 372.0
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "20 EBS volumes",
+   "detail": "missing environment, project, owner; created by Karpenter",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "Karpenter",
+   "resources": [
+    "vol-00000000000000001",
+    "vol-00000000000000002",
+    "vol-00000000000000003",
+    "vol-00000000000000004",
+    "vol-00000000000000005",
+    "vol-00000000000000006",
+    "vol-00000000000000007",
+    "vol-00000000000000008",
+    "vol-00000000000000009",
+    "vol-0000000000000000a",
+    "vol-0000000000000000b",
+    "vol-0000000000000000c",
+    "vol-0000000000000000d",
+    "vol-0000000000000000e",
+    "vol-0000000000000000f",
+    "vol-00000000000000010",
+    "vol-00000000000000011",
+    "vol-00000000000000012",
+    "vol-00000000000000013",
+    "vol-00000000000000014"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "2 EBS volumes",
+   "detail": "missing environment, project, owner; created by the instance it is attached to",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "the instance it is attached to",
+   "resources": [
+    "vol-00000000000000015",
+    "vol-00000000000000016"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "16 EBS volumes",
+   "detail": "missing environment, project, owner; created by EBS CSI driver",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "EBS CSI driver",
+   "resources": [
+    "vol-00000000000000017",
+    "vol-00000000000000018",
+    "vol-00000000000000019",
+    "vol-0000000000000001a",
+    "vol-0000000000000001b",
+    "vol-0000000000000001c",
+    "vol-0000000000000001d",
+    "vol-0000000000000001e",
+    "vol-0000000000000001f",
+    "vol-00000000000000020",
+    "vol-00000000000000021",
+    "vol-00000000000000022",
+    "vol-00000000000000023",
+    "vol-00000000000000024",
+    "vol-00000000000000026",
+    "vol-00000000000000027"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "20 EC2 instances",
+   "detail": "missing environment, project, owner; created by Karpenter",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "Karpenter",
+   "resources": [
+    "i-00000000000000001",
+    "i-00000000000000002",
+    "i-00000000000000003",
+    "i-00000000000000004",
+    "i-00000000000000005",
+    "i-00000000000000006",
+    "i-00000000000000007",
+    "i-00000000000000008",
+    "i-00000000000000009",
+    "i-0000000000000000a",
+    "i-0000000000000000b",
+    "i-0000000000000000c",
+    "i-0000000000000000d",
+    "i-0000000000000000e",
+    "i-0000000000000000f",
+    "i-00000000000000010",
+    "i-00000000000000011",
+    "i-00000000000000012",
+    "i-00000000000000013",
+    "i-00000000000000014"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "2 EC2 instances",
+   "detail": "missing environment, project, owner; created by EKS managed node group",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "EKS managed node group",
+   "resources": [
+    "i-00000000000000015",
+    "i-00000000000000016"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-east-1",
+   "resource": "6 load balancers",
+   "detail": "missing environment, project, owner; created by AWS Load Balancer Controller",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "AWS Load Balancer Controller",
+   "resources": [
+    "k8s-prod-api-5c1d9e7a3b",
+    "k8s-prod-web-91be04f2aa",
+    "k8s-prod-admin-2f7c6d10e4",
+    "k8s-prod-grpc-77a0c3b9d1",
+    "k8s-prod-kafkaui-0d4e8a6f52",
+    "k8s-staging-grafana-3f9a1c2d4e"
+   ]
+  },
+  {
+   "check": "tag-missing",
+   "region": "us-west-2",
+   "resource": "1 EBS volume",
+   "detail": "missing environment, project, owner; created by no controller (Terraform, console or CLI)",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "missing": [
+    "environment",
+    "project",
+    "owner"
+   ],
+   "created_by": "no controller (Terraform, console or CLI)",
+   "resources": [
+    "vol-00000000000000384"
+   ]
+  },
+  {
+   "check": "tag-case-variants",
+   "region": null,
+   "resource": "Environment, environment",
+   "detail": "tag keys are case-sensitive, so each spelling is a separate tag and the spend splits between them",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "on_resources": {
+    "Environment": 9,
+    "environment": 4
+   }
+  },
+  {
+   "check": "tag-case-variants",
+   "region": null,
+   "resource": "Project, project",
+   "detail": "tag keys are case-sensitive, so each spelling is a separate tag and the spend splits between them",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "",
+   "on_resources": {
+    "Project": 9,
+    "project": 4
+   }
+  },
+  {
+   "check": "tag-not-activated",
+   "region": null,
+   "resource": "Owner",
+   "detail": "on 13 scanned resources, but Cost Explorer has no spend under it: it is not activated as a cost allocation tag in the payer account",
+   "monthly_usd": null,
+   "basis": null,
+   "evidence": "aws ce get-tags --time-period Start=..,End=.."
+  }
+ ],
+ "bill_top_pct": 100.0,
+ "bill_top": [
+  {
+   "service": "Amazon Elastic Compute Cloud - Compute",
+   "usage_type": "BoxUsage:m6i.2xlarge",
+   "usd": 3428.35,
+   "pct": 33.6,
+   "quantity": 8928.0,
+   "unit": "Hrs",
+   "rate": 0.384
+  },
+  {
+   "service": "Amazon Elastic Compute Cloud - Compute",
+   "usage_type": "BoxUsage:c6i.xlarge",
+   "usd": 1011.84,
+   "pct": 9.9,
+   "quantity": 5952.0,
+   "unit": "Hrs",
+   "rate": 0.17
+  },
+  {
+   "service": "AmazonCloudWatch",
+   "usage_type": "USE1-DataProcessing-Bytes",
+   "usd": 740.0,
+   "pct": 7.3,
+   "quantity": 1480.0,
+   "unit": "GB",
+   "rate": 0.5
+  },
+  {
+   "service": "Amazon Relational Database Service",
+   "usage_type": "Multi-AZUsage:db.r6g.xlarge",
+   "usd": 669.6,
+   "pct": 6.6,
+   "quantity": 744.0,
+   "unit": "Hrs",
+   "rate": 0.9
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "DataTransfer-Regional-Bytes",
+   "usd": 610.0,
+   "pct": 6.0,
+   "quantity": 61000.0,
+   "unit": "GB",
+   "rate": 0.01
+  },
+  {
+   "service": "Amazon Simple Storage Service",
+   "usage_type": "TimedStorage-ByteHrs",
+   "usd": 483.0,
+   "pct": 4.7,
+   "quantity": 21000.0,
+   "unit": "GB-Mo",
+   "rate": 0.023
+  },
+  {
+   "service": "Amazon Elastic Container Service for Kubernetes",
+   "usage_type": "USE1-AmazonEKS-Hours:extendedSupport",
+   "usd": 446.4,
+   "pct": 4.4,
+   "quantity": 744.0,
+   "unit": "Hrs",
+   "rate": 0.6
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "NatGateway-Bytes",
+   "usd": 414.0,
+   "pct": 4.1,
+   "quantity": 9200.0,
+   "unit": "GB",
+   "rate": 0.045
+  },
+  {
+   "service": "Amazon ElastiCache",
+   "usage_type": "NodeUsage:cache.r6g.large",
+   "usd": 306.53,
+   "pct": 3.0,
+   "quantity": 1488.0,
+   "unit": "Hrs",
+   "rate": 0.206
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "EBS:VolumeUsage.gp2",
+   "usd": 265.0,
+   "pct": 2.6,
+   "quantity": 2650.0,
+   "unit": "GB-Mo",
+   "rate": 0.1
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "EBS:VolumeUsage.gp3",
+   "usd": 210.4,
+   "pct": 2.1,
+   "quantity": 2630.0,
+   "unit": "GB-Mo",
+   "rate": 0.08
+  },
+  {
+   "service": "AmazonCloudWatch",
+   "usage_type": "USE1-VendedLog-Bytes",
+   "usd": 210.0,
+   "pct": 2.1,
+   "quantity": 420.0,
+   "unit": "GB",
+   "rate": 0.5
+  },
+  {
+   "service": "AmazonCloudWatch",
+   "usage_type": "USE1-TimedStorage-ByteHrs",
+   "usd": 189.0,
+   "pct": 1.9,
+   "quantity": 6300.0,
+   "unit": "GB-Mo",
+   "rate": 0.03
+  },
+  {
+   "service": "Amazon CloudFront",
+   "usage_type": "US-DataTransfer-Out-Bytes",
+   "usd": 187.0,
+   "pct": 1.8,
+   "quantity": 2200.0,
+   "unit": "GB",
+   "rate": 0.085
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "EBS:SnapshotUsage",
+   "usd": 170.0,
+   "pct": 1.7,
+   "quantity": 3400.0,
+   "unit": "GB-Mo",
+   "rate": 0.05
+  },
+  {
+   "service": "Amazon Elastic Load Balancing",
+   "usage_type": "LoadBalancerUsage",
+   "usd": 150.66,
+   "pct": 1.5,
+   "quantity": 6696.0,
+   "unit": "Hrs",
+   "rate": 0.0225
+  },
+  {
+   "service": "Amazon Simple Storage Service",
+   "usage_type": "DataTransfer-Out-Bytes",
+   "usd": 135.0,
+   "pct": 1.3,
+   "quantity": 1500.0,
+   "unit": "GB",
+   "rate": 0.09
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "NatGateway-Hours",
+   "usd": 133.92,
+   "pct": 1.3,
+   "quantity": 2976.0,
+   "unit": "Hrs",
+   "rate": 0.045
+  },
+  {
+   "service": "Amazon Relational Database Service",
+   "usage_type": "RDS:Multi-AZ-GP3-Storage",
+   "usd": 115.0,
+   "pct": 1.1,
+   "quantity": 500.0,
+   "unit": "GB-Mo",
+   "rate": 0.23
+  },
+  {
+   "service": "Amazon Elastic Compute Cloud - Compute",
+   "usage_type": "BoxUsage:t3.medium",
+   "usd": 92.85,
+   "pct": 0.9,
+   "quantity": 2232.0,
+   "unit": "Hrs",
+   "rate": 0.0416
+  },
+  {
+   "service": "Amazon Elastic Container Service for Kubernetes",
+   "usage_type": "USE1-AmazonEKS-Hours:perCluster",
+   "usd": 74.4,
+   "pct": 0.7,
+   "quantity": 744.0,
+   "unit": "Hrs",
+   "rate": 0.1
+  },
+  {
+   "service": "Amazon Virtual Private Cloud",
+   "usage_type": "USE1-PublicIPv4:InUseAddress",
+   "usd": 52.08,
+   "pct": 0.5,
+   "quantity": 10416.0,
+   "unit": "Hrs",
+   "rate": 0.005
+  },
+  {
+   "service": "Amazon EC2 Container Registry (ECR)",
+   "usage_type": "TimedStorage-ByteHrs",
+   "usd": 38.0,
+   "pct": 0.4,
+   "quantity": 380.0,
+   "unit": "GB-Mo",
+   "rate": 0.1
+  },
+  {
+   "service": "EC2 - Other",
+   "usage_type": "USW2-EBS:VolumeUsage.gp2",
+   "usd": 20.0,
+   "pct": 0.2,
+   "quantity": 200.0,
+   "unit": "GB-Mo",
+   "rate": 0.1
+  },
+  {
+   "service": "Amazon Route 53",
+   "usage_type": "DNS-Queries",
+   "usd": 16.0,
+   "pct": 0.2,
+   "quantity": 40000000.0,
+   "unit": "Queries",
+   "rate": 4e-07
+  },
+  {
+   "service": "Amazon Elastic Load Balancing",
+   "usage_type": "LCUUsage",
+   "usd": 15.2,
+   "pct": 0.1,
+   "quantity": 1900.0,
+   "unit": "LCU-Hrs",
+   "rate": 0.008
+  },
+  {
+   "service": "Amazon Virtual Private Cloud",
+   "usage_type": "USE1-PublicIPv4:IdleAddress",
+   "usd": 11.16,
+   "pct": 0.1,
+   "quantity": 2232.0,
+   "unit": "Hrs",
+   "rate": 0.005
+  },
+  {
+   "service": "Amazon Virtual Private Cloud",
+   "usage_type": "USW2-PublicIPv4:IdleAddress",
+   "usd": 3.72,
+   "pct": 0.0,
+   "quantity": 744.0,
+   "unit": "Hrs",
+   "rate": 0.005
+  },
+  {
+   "service": "Amazon Route 53",
+   "usage_type": "HostedZone",
+   "usd": 1.5,
+   "pct": 0.0,
+   "quantity": 3.0,
+   "unit": "HostedZone",
+   "rate": 0.5
+  }
+ ],
+ "errors": []
+}
