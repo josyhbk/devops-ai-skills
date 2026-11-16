@@ -5,6 +5,7 @@ Claude Code skills I use for DevOps and platform work.
 | Skill | What it does |
 |---|---|
 | [drawio-aws-diagram](drawio-aws-diagram/) | AWS, EKS and Kubernetes architecture diagrams as draw.io XML, checked by lint and a rendered PNG before they are handed over |
+| [aws-cost-audit](aws-cost-audit/) | Read-only AWS cost and tagging audit where every dollar figure in the report traces back to the bill |
 
 ## drawio-aws-diagram
 
@@ -55,6 +56,45 @@ Lint works on its own too:
 python3 drawio-aws-diagram/lint.py my.drawio              # exit 1 on errors
 python3 drawio-aws-diagram/lint.py --xml file.drawio.png  # print the embedded XML
 ```
+
+## aws-cost-audit
+
+Ask for a cost audit, get a report where every dollar figure traces back to the bill.
+
+The hard part of asking a model about AWS cost is that it makes numbers up: "you could save up to 30%". This skill splits the work so it can't:
+
+1. `collect.py` reads last month's bill from Cost Explorer and scans the regions that had spend. It only makes describe, list and get calls and refuses anything else.
+2. It writes `facts.json` with every figure already computed and labelled: taken from the bill, priced at the account's own rate, a list price, or an upper bound. What can't be priced honestly gets no number and says why.
+3. Claude writes the report from `facts.json`: ranking, explanation, and the fix as Terraform or Kubernetes changes. It does no arithmetic.
+
+What it checks:
+
+- **Tagging.** Which required tags work in Cost Explorer, how much spend carries no value for them, and which resources are missing them. Missing tags are grouped by what created the resource (Terraform, Karpenter, EKS node groups, the EBS CSI driver, the AWS Load Balancer Controller), because that is where the fix goes.
+- **Waste.** Unattached EBS volumes, gp2 volumes, idle Elastic IPs, old snapshots, load balancers with no targets, log groups that never expire, NAT gateways with no traffic or with no S3 gateway endpoint next to them.
+- **Extended support.** EKS clusters paying for it or about to, and RDS extended support charges.
+
+Example: [report.md](aws-cost-audit/examples/report.md), written from [facts.json](aws-cost-audit/examples/facts.json). The account in the example is synthetic.
+
+### Install
+
+```bash
+cp -r devops-ai-skills/aws-cost-audit ~/.claude/skills/
+```
+
+Needs `python3` and the AWS CLI v2. No pip installs. `policy.json` is the read-only IAM policy the collector needs. Cost Explorer bills $0.01 per request and a run makes five to ten.
+
+### Use
+
+> Audit the cost of the account behind the staging profile. Required tags are environment, project and owner.
+
+The collector works on its own too:
+
+```bash
+python3 aws-cost-audit/collect.py --profile staging --out facts.json
+python3 aws-cost-audit/collect.py --selftest
+```
+
+One account per run. Savings Plans coverage, rightsizing, S3 lifecycle and data transfer are not checked yet: the report explains those lines of the bill but puts no savings number on them.
 
 ## Notes
 
