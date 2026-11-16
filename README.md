@@ -1,5 +1,7 @@
 # devops-ai-skills
 
+[![ci](https://github.com/josyhbk/devops-ai-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/josyhbk/devops-ai-skills/actions/workflows/ci.yml)
+
 Claude Code skills I use for DevOps and platform work.
 
 | Skill | What it does |
