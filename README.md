@@ -31,6 +31,10 @@ Kubernetes workload:
 
 ![k8s-workload](drawio-aws-diagram/examples/k8s-workload.drawio.png)
 
+Multi-account serverless app, from [terraform-aws-emulator](https://github.com/josyhbk/terraform-aws-emulator), where the Terraform behind it lives:
+
+![multi-account-serverless](drawio-aws-diagram/examples/multi-account-serverless.drawio.png)
+
 The `.drawio.png` files are regular images with the diagram embedded. Open one in draw.io and it is fully editable.
 
 ### Install
