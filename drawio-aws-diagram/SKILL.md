@@ -12,7 +12,7 @@ Work in the user's directory, not in the skill's. `$SKILL` below is this skill's
 | File | What it is |
 |---|---|
 | `starter.drawio` | Clean 3-tier skeleton (Route 53, CloudFront, WAF, ACM, ALB, EC2 x2, RDS). Copy it. |
-| `examples/*.drawio.png` | Finished diagrams with the XML embedded: `eks-gitops`, `k8s-workload`, `three-tier`. |
+| `examples/*.drawio.png` | Finished diagrams with the XML embedded: `eks-gitops`, `k8s-workload`, `three-tier`, `multi-account-serverless` (two accounts, region, VPC tiers, Lambda in a VPC). |
 | `shapes.txt` | Every valid AWS and Kubernetes shape name, taken from draw.io's source. |
 | `lint.py` | Structural checks. Stdlib Python, no install. |
 
